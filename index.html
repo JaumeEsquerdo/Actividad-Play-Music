@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actividad Music Player</title>
+
+    <style>
+
+        .Lista{
+            background-color: aliceblue;
+        }
+
+
+
+    </style>
+
+</head>
+
+<body>
+    <div id="ListaCanciones" class="Lista">
+
+    </div>
+
+
+
+
+    <script>
+        const listaCanciones = ["Mirada", "Hey Ma", "Would You...?", "Amirino", "One Right"];
+
+        const boxCanciones = document.getElementById("ListaCanciones");
+
+        listaCanciones.forEach((cancion, i) => {
+            console.log(`${cancion} - id: ${i}`);
+            boxCanciones.innerHTML += `<div class="Lista-cancion">
+            ${cancion} <br> ${i}</div>`
+        });
+
+        const listaArtistas = ["Ivan Cornejo", "Cam`ron", "Touch & Go", "Baby Pantera", "Post Malone & The Weekend"];
+
+
+
+
+
+
+
+    </script>
+</body>
+
+</html>
