@@ -7,15 +7,13 @@
     <title>Actividad Music Player</title>
 
     <style>
-
-        .Lista-cancion{
+        .Lista-cancion {
             background-color: aliceblue;
         }
-        .Lista-artista{
+
+        .Lista-artista {
             background-color: beige;
         }
-
-
     </style>
 
 </head>
@@ -24,30 +22,60 @@
     <div id="ListaCanciones" class="Lista">
 
     </div>
+    <button id="BtnTema3">Tema 3</button>
+    <button id="BtnSiguiente">siguiente</button>
+    <button id="BtnAnterior">anterior</button>
+    <button id="BtnPlay">play</button>
+    <button id="BtnPausa">pausa</button>
 
 
 
 
     <script>
         const listaCanciones = ["Mirada", "Hey Ma", "Would You...?", "Amirino", "One Right"];
-
         const boxCanciones = document.getElementById("ListaCanciones");
+        const listaArtistas = ["Ivan Cornejo", "Cam`ron", "Touch & Go", "Baby Pantera", "Post Malone & The Weekend"];
+
+        const btnTema3 = document.getElementById("BtnTema3");
+
+        const nombreCancionYArtista = document.querySelectorAll(".Lista-artista", ".Lista-cancion");
+
+
 
         listaCanciones.forEach((cancion, i) => {
             console.log(`${cancion} - id: ${i}`);
-            boxCanciones.innerHTML += `<div class="Lista-cancion">
+            boxCanciones.innerHTML += `<div class="Lista-cancion" id="Cancion${i}">
             ${cancion} <br> ${i}</div>`
         });
 
-        const listaArtistas = ["Ivan Cornejo", "Cam`ron", "Touch & Go", "Baby Pantera", "Post Malone & The Weekend"];
 
-        listaArtistas.forEach((artista, i)=>{
+
+        listaArtistas.forEach((artista, i) => {
             console.log(`${artista}`);
-            boxCanciones.innerHTML +=`<div class="Lista-artista"> ${artista}</div>`
+            boxCanciones.innerHTML += `<div class="Lista-artista" id="Artista${i}"> ${artista}</div>`
+        });
+
+        //paso 4 crear botón que muestre en consola el nombre de la canción que se encuentre en la posicion 3 de canciones y artistas
+
+        btnTema3.addEventListener("click", () => {
+            console.log(`Canción "${listaCanciones[2]}" del artista ${listaArtistas[2]}.`);
+
         });
 
 
+        // este código hace que cualquier elemento con id al escuchar un click agrega un evento sin necesidad de haberla declarado antes
+        document.addEventListener('click', (event) => {
+            console.log(event.target.id);
+        });
 
+        nombreCancionYArtista.forEach((CancionYArtista, i) => {
+            CancionYArtista.addEventListener("click", () => {
+                if (CancionYArtista.classList.contains("Lista-cancion")) {
+                    console.log(`Cancion: ${listaCanciones[i]} Artista: ${listaArtistas[i]}`)
+                }
+            })
+
+        });
 
 
 
