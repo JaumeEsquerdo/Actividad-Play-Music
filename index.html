@@ -8,10 +8,12 @@
 
     <style>
 
-        .Lista{
+        .Lista-cancion{
             background-color: aliceblue;
         }
-
+        .Lista-artista{
+            background-color: beige;
+        }
 
 
     </style>
@@ -39,6 +41,10 @@
 
         const listaArtistas = ["Ivan Cornejo", "Cam`ron", "Touch & Go", "Baby Pantera", "Post Malone & The Weekend"];
 
+        listaArtistas.forEach((artista, i)=>{
+            console.log(`${artista}`);
+            boxCanciones.innerHTML +=`<div class="Lista-artista"> ${artista}</div>`
+        });
 
 
 
