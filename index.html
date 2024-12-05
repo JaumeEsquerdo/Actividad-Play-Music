@@ -9,6 +9,12 @@
     <style>
         .Lista-cancion {
             background-color: aliceblue;
+            height: 90px;
+        }
+        .Lista-cancion > div{
+            display: flex;
+            width: 100%;
+            
         }
 
         .Lista-artista {
@@ -22,6 +28,8 @@
     <div id="ListaCanciones" class="Lista">
 
     </div>
+    <h3>Canción reproduciéndose</h3>
+    <div id="PlayingSong"></div>
     <button id="BtnTema3">Tema 3</button>
     <button id="BtnSiguiente">siguiente</button>
     <button id="BtnAnterior">anterior</button>
@@ -38,28 +46,33 @@
 
         const btnTema3 = document.getElementById("BtnTema3");
 
-        const nombreCancionYArtista = document.querySelectorAll(".Lista-artista", ".Lista-cancion");
+        // const nombreCancionYArtista = document.querySelectorAll(".Lista-artista", ".Lista-cancion");
+
+        //lista de divs que que agarra todos los divs de Lista-cancion
 
 
 
         listaCanciones.forEach((cancion, i) => {
             console.log(`${cancion} - id: ${i}`);
-            boxCanciones.innerHTML += `<div class="Lista-cancion" id="Cancion${i}">
-            ${cancion} <br> ${i}</div>`
+            const song = listaCanciones[i];
+            const artist = listaArtistas[i];
+
+            boxCanciones.innerHTML += `<div class="Lista-cancion" id="Cancion${i}"> 
+            ${cancion} - ${artist} - ${i}</div>` //agregar un id a cada div
         });
 
 
 
-        listaArtistas.forEach((artista, i) => {
-            console.log(`${artista}`);
-            boxCanciones.innerHTML += `<div class="Lista-artista" id="Artista${i}"> ${artista}</div>`
-        });
+        // listaArtistas.forEach((artista, i) => {
+        //     console.log(`${artista}`);
+        //     boxCanciones.innerHTML += `<div class="Lista-artista" id="Artista${i}"> </div>`
+        // });
 
         //paso 4 crear botón que muestre en consola el nombre de la canción que se encuentre en la posicion 3 de canciones y artistas
 
         btnTema3.addEventListener("click", () => {
             console.log(`Canción "${listaCanciones[2]}" del artista ${listaArtistas[2]}.`);
-
+            imprimirReproduciendo(2);
         });
 
 
@@ -68,14 +81,53 @@
             console.log(event.target.id);
         });
 
-        nombreCancionYArtista.forEach((CancionYArtista, i) => {
-            CancionYArtista.addEventListener("click", () => {
-                if (CancionYArtista.classList.contains("Lista-cancion")) {
-                    console.log(`Cancion: ${listaCanciones[i]} Artista: ${listaArtistas[i]}`)
-                }
-            })
+        // nombreCancionYArtista.forEach((CancionYArtista, i) => {
+        //     CancionYArtista.addEventListener("click", () => {
+        //         if (CancionYArtista.classList.contains("Lista-cancion")) {
+        //             console.log(`Cancion: ${listaCanciones[i]}, Artista: ${listaArtistas[i]}`)
+        //         }
+        //     })
+        // });
 
+        //PARTE 6 
+        const divsCanciones = document.querySelectorAll(".Lista-cancion"); //la clase está creada bajo en js
+        const divPlayingSong = document.getElementById("PlayingSong");
+
+        divsCanciones.forEach((divCancion,i)=>{
+            divCancion.addEventListener("click",()=>{
+                
+                imprimirReproduciendo(i); //imprimir canción que quieras
+
+            });
         });
+
+        function imprimirReproduciendo(indice){ //funcion para reutilizarla
+            const song = listaCanciones[indice];
+                const artist = listaArtistas[indice];
+                console.log("Artista "+artist+ " canción "+song);
+
+                divPlayingSong.innerHTML = `<div> canción ${song} <br>
+                                            artista ${artist}`; // no va += porque no quieres que se imprima lo anterior, quieres remplazarlo
+                
+        };
+
+        //darle funciones a los botones PASO 8
+
+        const btnSig = document.getElementById("BtnSiguiente");
+        const btnAnt = document.getElementById("BtnAnterior");
+        let idCancionActual = 0; //primera canción (esto debería estar arriba del todo)
+
+
+        //REVISAR QUE TENGA TOPE, ES DECIR QUE AL PASAR LA CANCION MÁXIMA VUELVA A LA PRIMERA
+        btnSig.addEventListener("click", ()=>{
+            idCancionActual++;
+            imprimirReproduciendo(idCancionActual)
+        });
+        btnAnt.addEventListener("click",()=>{
+            idCancionActual--;
+            imprimirReproduciendo(idCancionActual);
+        })
+
 
 
 
