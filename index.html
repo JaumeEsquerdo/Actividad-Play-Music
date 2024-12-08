@@ -31,6 +31,9 @@
     </div>
     <h3>Canción reproduciéndose</h3>
     <div id="PlayingSong"></div>
+    <div id="VideoContainer">
+        <iframe id="YoutubePlayer" src="" frameborder="0"></iframe>
+    </div>
     <button id="BtnTema3">Tema 3</button>
     <button id="BtnSiguiente">siguiente</button>
     <button id="BtnAnterior">anterior</button>
@@ -45,7 +48,10 @@
         const boxCanciones = document.getElementById("ListaCanciones");
         const listaArtistas = ["Ivan Cornejo", "Cam`ron", "Touch & Go", "Baby Pantera", "Post Malone & The Weekend"];
 
+        const listaVideos = ["https://www.youtube.com/watch?v=nxBRp-P1KPU","https://www.youtube.com/watch?v=UWScJsgvUFw","https://www.youtube.com/watch?v=3eNCSxMYSrs","https://www.youtube.com/watch?v=rqBma1hskrQ","https://www.youtube.com/watch?v=OCogbzIvYg0"];
+
         const btnTema3 = document.getElementById("BtnTema3");
+        const iframePlayer = document.getElementById("YoutubePlayer");
 
         // const nombreCancionYArtista = document.querySelectorAll(".Lista-artista", ".Lista-cancion");
 
@@ -59,7 +65,7 @@
             const artist = listaArtistas[i];
 
             boxCanciones.innerHTML += `<div class="Lista-cancion" id="Cancion${i}"> 
-            ${cancion} - ${artist} - ${i}</div>` //agregar un id a cada div
+            ${cancion} - ${artist} - ${i}</div>`; //agregar un id a cada div
         });
 
 
@@ -109,6 +115,7 @@
 
             divPlayingSong.innerHTML = `<div> canción ${song} <br>
                                             artista ${artist}`; // no va += porque no quieres que se imprima lo anterior, quieres remplazarlo
+            iframePlayer.src = listaVideos[indice];
 
         };
 
