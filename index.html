@@ -11,10 +11,11 @@
             background-color: aliceblue;
             height: 90px;
         }
-        .Lista-cancion > div{
+
+        .Lista-cancion>div {
             display: flex;
             width: 100%;
-            
+
         }
 
         .Lista-artista {
@@ -93,22 +94,22 @@
         const divsCanciones = document.querySelectorAll(".Lista-cancion"); //la clase está creada bajo en js
         const divPlayingSong = document.getElementById("PlayingSong");
 
-        divsCanciones.forEach((divCancion,i)=>{
-            divCancion.addEventListener("click",()=>{
-                
+        divsCanciones.forEach((divCancion, i) => {
+            divCancion.addEventListener("click", () => {
+
                 imprimirReproduciendo(i); //imprimir canción que quieras
 
             });
         });
 
-        function imprimirReproduciendo(indice){ //funcion para reutilizarla
+        function imprimirReproduciendo(indice) { //funcion para reutilizarla
             const song = listaCanciones[indice];
-                const artist = listaArtistas[indice];
-                console.log("Artista "+artist+ " canción "+song);
+            const artist = listaArtistas[indice];
+            console.log("Artista " + artist + " canción " + song);
 
-                divPlayingSong.innerHTML = `<div> canción ${song} <br>
+            divPlayingSong.innerHTML = `<div> canción ${song} <br>
                                             artista ${artist}`; // no va += porque no quieres que se imprima lo anterior, quieres remplazarlo
-                
+
         };
 
         //darle funciones a los botones PASO 8
@@ -119,12 +120,24 @@
 
 
         //REVISAR QUE TENGA TOPE, ES DECIR QUE AL PASAR LA CANCION MÁXIMA VUELVA A LA PRIMERA
-        btnSig.addEventListener("click", ()=>{
-            idCancionActual++;
+        const totalCanciones = listaCanciones.length;
+
+        btnSig.addEventListener("click", () => {
+            if (idCancionActual == totalCanciones - 1) {
+                //si esta es la ultima opc. volver al principioo
+                idCancionActual = 0;
+            } else {
+                idCancionActual++;
+            }
             imprimirReproduciendo(idCancionActual)
         });
-        btnAnt.addEventListener("click",()=>{
-            idCancionActual--;
+        btnAnt.addEventListener("click", () => {
+            if (idCancionActual == 0) {
+                idCancionActual = totalCanciones - 1;
+            } else {
+                idCancionActual--;
+            }
+
             imprimirReproduciendo(idCancionActual);
         })
 
