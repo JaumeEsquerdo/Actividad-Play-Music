@@ -132,8 +132,8 @@
             imprimirReproduciendo(idCancionActual)
         });
         btnAnt.addEventListener("click", () => {
-            if (idCancionActual == 0) {
-                idCancionActual = totalCanciones - 1;
+            if (idCancionActual == 0) { //si esta es la opcion actual (es decir la primera cancion) 
+                idCancionActual = totalCanciones - 1; //cuando le das a btnAnt se va a la ultima cancion
             } else {
                 idCancionActual--;
             }
