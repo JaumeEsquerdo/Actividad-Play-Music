@@ -10,17 +10,57 @@
         .Lista-cancion {
             background-color: aliceblue;
             height: 90px;
+            display: flex;
         }
 
-        .Lista-cancion>div {
+        .Lista {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .Lista-cancion {
             display: flex;
             width: 100%;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: scale 1s ease-in;
+        }
 
+        .Lista-cancion:hover {
+            scale: 0.9;
+        }
+
+        .Lista-cancion:active {
+            scale: 1.1;
+        }
+
+        .Lista-cancion>p {
+            text-align: center;
+            width: 100%;
         }
 
         .Lista-artista {
             background-color: beige;
         }
+        .Reproductor{
+            display: flex;
+            width: 100%;
+            margin: 20px auto;
+            justify-content: center;
+            gap: 2rem;
+        }
+        .Botones{
+            border-radius: 20px;
+            width: 70px;
+            cursor: pointer;
+        }
+        .Botones:hover{
+            background-color: darkcyan;
+        }
+        .isActive{
+            background-color: aqua;
+        }
+        
     </style>
 
 </head>
@@ -29,46 +69,147 @@
     <div id="ListaCanciones" class="Lista">
 
     </div>
-    <h3>Canción reproduciéndose</h3>
-    <div id="PlayingSong"></div>
-    <!-- <div id="VideoContainer">
+    <div class="Reproductor">
+        <h3>Canción reproduciéndose</h3>
+        <div id="PlayingSong"></div>
+        <!-- <div id="VideoContainer">
         <iframe  src="" frameborder="0"></iframe>
     </div> -->
-    <audio id="YoutubePlayer" src="" autoplay controls></audio>                                                                                                                                                                                                                                                     
-    <button id="BtnTema3">Tema 3</button>
-    <button id="BtnSiguiente">siguiente</button>
-    <button id="BtnAnterior">anterior</button>
-    <button id="BtnPlay">play</button>
-    <button id="BtnPausa">pausa</button>
+        <audio id="YoutubePlayer" src="" autoplay controls></audio>
+        <button class="Botones" id="BtnTema3">Tema 3</button>
+        <button class="Botones" id="BtnSiguiente">siguiente</button>
+        <button class="Botones" id="BtnAnterior">anterior</button>
+        <button class="Botones" id="BtnPlay">play</button>
+        <button class="Botones" id="BtnPausa">pausa</button>
+    </div>
 
 
 
 
     <script>
-        const listaCanciones = ["Mirada", "Hey Ma", "Would You...?", "Amirino", "One Right"];
-        const boxCanciones = document.getElementById("ListaCanciones");
-        const listaArtistas = ["Ivan Cornejo", "Cam`ron", "Touch & Go", "Baby Pantera", "Post Malone & The Weekend"];
 
-        const listaVideos = ["audio/Ivan Cornejo - Mirada (Official Lyric Video).mp3","audio/Hey Ma - Cam'Ron.mp3","audio/Campbell x Alcemist - Would You (go to bed with me_) - Official Video.mp3","audio/AMIRINO.mp3","audio/Post Malone, The Weeknd - One Right Now (Official Audio).mp3"];
+        const listaDeLasCanciones = [{
+            artista: "Ivan Cornejo",
+            url: "audio/Ivan Cornejo - Mirada (Official Lyric Video).mp3",
+            titulo: "Mirada",
+        },
+        {
+            artista: "Cam`ron",
+            url: "audio/Hey Ma - Cam'Ron.mp3",
+            titulo: "Hey Ma",
+        },
+        {
+            artista: "Touch & Go",
+            url: "audio/Campbell x Alcemist - Would You (go to bed with me_) - Official Video.mp3",
+            titulo: "Would You...?",
+        },
+        {
+            artista: "Baby Pantera",
+            url: "audio/AMIRINO.mp3",
+            titulo: "Amirino",
+        },
+        {
+            artista: "Post Malone & The Weekend",
+            url: "audio/Post Malone, The Weeknd - One Right Now (Official Audio).mp3",
+            titulo: "One Right",
+        }]; //esto es un array de objetos
+
+
+
+
+        // const listaCanciones = ["Mirada", "Hey Ma", "Would You...?", "Amirino", "One Right"];
+        const boxCanciones = document.getElementById("ListaCanciones");
+        // const listaArtistas = ["Ivan Cornejo", "Cam`ron", "Touch & Go", "Baby Pantera", "Post Malone & The Weekend"];
+
+        // const listaVideos = ["audio/Ivan Cornejo - Mirada (Official Lyric Video).mp3","audio/Hey Ma - Cam'Ron.mp3","audio/Campbell x Alcemist - Would You (go to bed with me_) - Official Video.mp3","audio/AMIRINO.mp3","audio/Post Malone, The Weeknd - One Right Now (Official Audio).mp3"];
 
         const btnTema3 = document.getElementById("BtnTema3");
-        const iframePlayer = document.getElementById("YoutubePlayer");
+        const iframePlayer = document.getElementById("YoutubePlayer"); //realmente es de la etiqueta audio
+        const btnPlay = document.getElementById("BtnPlay");
+        const btnPausa = document.getElementById("BtnPausa");
+        const audioPlayer = document.querySelector("audio");
+
+        // const song1 ={
+        //     artista:"Ivan Cornejo";
+        //     url: "audio/Ivan Cornejo - Mirada (Official Lyric Video).mp3";
+        //     titulo: "Mirada";
+        // }
+        // const song2 ={
+        //     artista:"Ivan Cornejo";
+        //     url: "audio/Ivan Cornejo - Mirada (Official Lyric Video).mp3";
+        //     titulo: "Mirada";
+        // }
+        // const song3 ={
+        //     artista:"Ivan Cornejo";
+        //     url: "audio/Ivan Cornejo - Mirada (Official Lyric Video).mp3";
+        //     titulo: "Mirada";
+        // }
+        // const song4 ={
+        //     artista:"Ivan Cornejo";
+        //     url: "audio/Ivan Cornejo - Mirada (Official Lyric Video).mp3";
+        //     titulo: "Mirada";
+        // }
+        // const song5 ={
+        //     artista:"Ivan Cornejo";
+        //     url: "audio/Ivan Cornejo - Mirada (Official Lyric Video).mp3";
+        //     titulo: "Mirada";
+        // }
+
+
+        function imprimirReproduciendo(indice) { //funcion para reutilizarla
+            const song = listaDeLasCanciones[indice].titulo;       //listaCanciones[indice];
+            const artist = listaDeLasCanciones[indice].artista;     //listaArtistas[indice];
+            console.log("Artista " + artist + " canción " + song);
+
+            divPlayingSong.innerHTML = `<div class="ListaCanciones-cancion"> canción ${song} <br>
+                                            artista ${artist}</div>`; // no va += porque no quieres que se imprima lo anterior, quieres remplazarlo
+            iframePlayer.src = listaDeLasCanciones[indice].url;         //listaVideos[indice];
+
+        };
+
+
+        console.log(listaDeLasCanciones[0].artista);  //primer elemento de la lista con solo el artista
+
 
         // const nombreCancionYArtista = document.querySelectorAll(".Lista-artista", ".Lista-cancion");
 
         //lista de divs que que agarra todos los divs de Lista-cancion
 
 
+        const handlerReproducir = () => {
+            audioPlayer.play();
 
-        listaCanciones.forEach((cancion, i) => {
+        }
+
+        const handlerPausar = () => {
+            audioPlayer.pause();
+
+        }
+
+        btnPlay.addEventListener("click", handlerReproducir);
+        btnPausa.addEventListener("click", handlerPausar);
+
+
+        listaDeLasCanciones.forEach((cancion, i) => {
             console.log(`${cancion} - id: ${i}`);
-            const song = listaCanciones[i];
-            const artist = listaArtistas[i];
 
-            boxCanciones.innerHTML += `<div class="Lista-cancion" id="Cancion${i}"> 
-            ${cancion} - ${artist} - ${i}</div>`; //agregar un id a cada div
+
+            const song = cancion.titulo; //Primero recorre la listaDeCanciones, y en const song = cancion  //listaCanciones[i];
+            const artist = cancion.artista;        //listaArtistas[i];
+
+            boxCanciones.innerHTML += `<div class="Lista-cancion" id="Cancion${i}"><p>
+            ${song} - ${artist} - ${i}</p></div>`; //agregar un id a cada div
         });
 
+        const divsCanciones = document.querySelectorAll(".Lista-cancion");
+
+        divsCanciones.forEach((boton)=>{
+            boton.addEventListener("click",()=>{
+                divsCanciones.forEach((boton)=> boton.classList.remove("isActive") );
+
+                boton.classList.add("isActive");
+            })
+        })
 
 
         // listaArtistas.forEach((artista, i) => {
@@ -98,7 +239,7 @@
         // });
 
         //PARTE 6 
-        const divsCanciones = document.querySelectorAll(".Lista-cancion"); //la clase está creada bajo en js
+         //la clase está creada bajo en js
         const divPlayingSong = document.getElementById("PlayingSong");
 
         divsCanciones.forEach((divCancion, i) => {
@@ -109,16 +250,7 @@
             });
         });
 
-        function imprimirReproduciendo(indice) { //funcion para reutilizarla
-            const song = listaCanciones[indice];
-            const artist = listaArtistas[indice];
-            console.log("Artista " + artist + " canción " + song);
 
-            divPlayingSong.innerHTML = `<div> canción ${song} <br>
-                                            artista ${artist}`; // no va += porque no quieres que se imprima lo anterior, quieres remplazarlo
-            iframePlayer.src = listaVideos[indice];
-
-        };
 
         //darle funciones a los botones PASO 8
 
@@ -128,10 +260,10 @@
 
 
         //REVISAR QUE TENGA TOPE, ES DECIR QUE AL PASAR LA CANCION MÁXIMA VUELVA A LA PRIMERA
-        const totalCanciones = listaCanciones.length;
+        const totalCanciones = listaDeLasCanciones.length;                //listaCanciones.length;
 
         btnSig.addEventListener("click", () => {
-            if (idCancionActual == totalCanciones -1) { //tambien se podria haber puesto directamente "listaCanciones.length" en vez de declarar la constante totalCanciones
+            if (idCancionActual == totalCanciones - 1) { //tambien se podria haber puesto directamente "listaCanciones.length" en vez de declarar la constante totalCanciones
                 //si esta es la ultima opc. volver al principioo
                 idCancionActual = 0;
             } else {
