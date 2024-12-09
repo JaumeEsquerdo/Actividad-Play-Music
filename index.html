@@ -31,9 +31,10 @@
     </div>
     <h3>Canción reproduciéndose</h3>
     <div id="PlayingSong"></div>
-    <div id="VideoContainer">
-        <iframe id="YoutubePlayer" src="" frameborder="0"></iframe>
-    </div>
+    <!-- <div id="VideoContainer">
+        <iframe  src="" frameborder="0"></iframe>
+    </div> -->
+    <audio id="YoutubePlayer" src="" autoplay controls></audio>                                                                                                                                                                                                                                                     
     <button id="BtnTema3">Tema 3</button>
     <button id="BtnSiguiente">siguiente</button>
     <button id="BtnAnterior">anterior</button>
@@ -48,7 +49,7 @@
         const boxCanciones = document.getElementById("ListaCanciones");
         const listaArtistas = ["Ivan Cornejo", "Cam`ron", "Touch & Go", "Baby Pantera", "Post Malone & The Weekend"];
 
-        const listaVideos = ["https://www.youtube.com/watch?v=nxBRp-P1KPU","https://www.youtube.com/watch?v=UWScJsgvUFw","https://www.youtube.com/watch?v=3eNCSxMYSrs","https://www.youtube.com/watch?v=rqBma1hskrQ","https://www.youtube.com/watch?v=OCogbzIvYg0"];
+        const listaVideos = ["audio/Ivan Cornejo - Mirada (Official Lyric Video).mp3","audio/Hey Ma - Cam'Ron.mp3","audio/Campbell x Alcemist - Would You (go to bed with me_) - Official Video.mp3","audio/AMIRINO.mp3","audio/Post Malone, The Weeknd - One Right Now (Official Audio).mp3"];
 
         const btnTema3 = document.getElementById("BtnTema3");
         const iframePlayer = document.getElementById("YoutubePlayer");
@@ -130,7 +131,7 @@
         const totalCanciones = listaCanciones.length;
 
         btnSig.addEventListener("click", () => {
-            if (idCancionActual == totalCanciones - 1) {
+            if (idCancionActual == totalCanciones -1) { //tambien se podria haber puesto directamente "listaCanciones.length" en vez de declarar la constante totalCanciones
                 //si esta es la ultima opc. volver al principioo
                 idCancionActual = 0;
             } else {
@@ -142,7 +143,7 @@
             if (idCancionActual == 0) { //si esta es la opcion actual (es decir la primera cancion) 
                 idCancionActual = totalCanciones - 1; //cuando le das a btnAnt se va a la ultima cancion
             } else {
-                idCancionActual--;
+                idCancionActual--;  //si no, sigue restando normal
             }
 
             imprimirReproduciendo(idCancionActual);
